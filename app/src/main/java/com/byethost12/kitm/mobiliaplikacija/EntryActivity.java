@@ -16,7 +16,7 @@ import static com.byethost12.kitm.mobiliaplikacija.PokemonAdapter.ENTRY_ID;
 
 public class EntryActivity extends AppCompatActivity {
 
-    Button btnSubmit, btnUpdate;
+    Button btnSubmit, btnUpdate, btnDelete;
 
     EditText etName, etWeight, etHeight;
     RadioGroup rbGroup;
@@ -64,17 +64,20 @@ public class EntryActivity extends AppCompatActivity {
             pokemonas.setHeight(0);
             pokemonas.setWeight(0);
         } else { // egzistuojantis irasas
-           pokemonas = db.getPokemonas(entryID);
+            pokemonas = db.getPokemonas(entryID);
         }
 
         btnSubmit = (Button) findViewById(R.id.btnAdd);
         btnUpdate = (Button) findViewById(R.id.btnUpdate);
+        btnDelete = (Button) findViewById(R.id.btnDelete);
 
         if (entryID == -1){ //naujas irasas - disable update button
             btnUpdate.setEnabled(false);
+            btnDelete.setEnabled(false);
             btnSubmit.setEnabled(true);
         }else { // egzistuojantis irasas - disable submit
             btnUpdate.setEnabled(true);
+            btnDelete.setEnabled(true);
             btnSubmit.setEnabled(false);
         }
 
@@ -116,6 +119,17 @@ public class EntryActivity extends AppCompatActivity {
                 getFields();
 
                 db.updatePokemon(pokemonas);
+
+                Intent goToSearchActivity = new Intent(EntryActivity.this, SearchActivity.class);
+                startActivity(goToSearchActivity);
+            }
+        });
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFields();
+
+                db.deletePokemon(pokemonas);
 
                 Intent goToSearchActivity = new Intent(EntryActivity.this, SearchActivity.class);
                 startActivity(goToSearchActivity);

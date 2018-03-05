@@ -268,4 +268,8 @@ public class DatabaseSQLite extends SQLiteOpenHelper {
 
         getReadableDatabase().update(TABLE_POKEMONS, cv, " id = "+pokemon.getId(), null);
     }
+    public int deletePokemon(Pokemonas pokemon) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_POKEMONS, " id = "+pokemon.getId(), null);
+    }
 }
