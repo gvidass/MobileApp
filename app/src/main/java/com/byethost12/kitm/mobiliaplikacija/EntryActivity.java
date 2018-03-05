@@ -39,9 +39,7 @@ public class EntryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entry);
-
-
-
+        // Back mygtukas
         ActionBar actionBar = getActionBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -230,6 +228,11 @@ public class EntryActivity extends AppCompatActivity {
         rbWeak.setChecked(pokemonas.getCp().equals("Weak"));
 
         spinner.setSelection(adapter.getPosition(pokemonas.getType()));
+    }
+    @Override
+    public void onBackPressed() {
+        // super.onBackPressed(); commented this line in order to disable back press
+        //Write your code here
     }
 
 }
