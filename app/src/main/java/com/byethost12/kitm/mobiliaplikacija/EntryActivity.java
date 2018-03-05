@@ -1,8 +1,12 @@
 package com.byethost12.kitm.mobiliaplikacija;
 
+import android.app.ActionBar;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -35,6 +39,11 @@ public class EntryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entry);
+
+
+
+        ActionBar actionBar = getActionBar();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         db = new DatabaseSQLite(EntryActivity.this);
 
@@ -137,6 +146,36 @@ public class EntryActivity extends AppCompatActivity {
         });
     }
 
+    //Exit Dialog
+    public boolean onOptionsItemSelected(MenuItem item) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setMessage("Do you want to Exit?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent myIntent = new Intent(getApplicationContext(), SearchActivity.class);
+                startActivityForResult(myIntent, 0);
+
+
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //if user select "No", just cancel this dialog and continue with app
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+
+
+        return false;
+
+    }
+
     private void getFields(){
         String name = etName.getText().toString();
         double weight = Double.parseDouble(etWeight.getText().toString());
@@ -192,4 +231,5 @@ public class EntryActivity extends AppCompatActivity {
 
         spinner.setSelection(adapter.getPosition(pokemonas.getType()));
     }
+
 }
